@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>km — download</title>
+		<meta
+			name="description"
+			content="km — local-first notes for desktop, mobile, and the web."
+		/>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<main class="wrap">
+			<header class="hero">
+				<h1>km</h1>
+				<p class="tagline">Local-first notes for every device.</p>
+				<a class="cta" id="open-app" href="#">Open the web app →</a>
+			</header>
+
+			<section class="downloads">
+				<div class="downloads-head">
+					<h2>Download</h2>
+					<span class="release-meta" id="release-meta" aria-live="polite"
+						>Loading latest release…</span
+					>
+				</div>
+
+				<!-- Recommended pick for the visitor's detected OS -->
+				<div id="primary" class="primary" hidden></div>
+
+				<!-- Full grid of every platform asset -->
+				<ul id="all-downloads" class="grid"></ul>
+
+				<p id="error" class="error" hidden></p>
+				<p class="source">
+					All builds:
+					<a id="releases-link" href="#" rel="noopener">GitHub Releases</a>
+				</p>
+			</section>
+
+			<footer class="foot">
+				<span id="version-foot"></span>
+			</footer>
+		</main>
+
+		<script src="app.js"></script>
+	</body>
+</html>
