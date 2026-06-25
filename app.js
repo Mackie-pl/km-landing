@@ -5,8 +5,8 @@
 const CONFIG = {
 	// owner/repo that publishes the app releases
 	repo: 'Mackie-pl/km',
-	// Where the web app lives (the Pages subdomain). Edit to match your DNS.
-	appUrl: 'https://app.example.com',
+	// Where the web app lives (the Pages subdomain).
+	appUrl: 'https://app.kmflow.xyz',
 };
 
 const $ = (id) => document.getElementById(id);

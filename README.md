@@ -12,10 +12,10 @@ so it updates automatically on every new tag — no rebuild required.
 Two things to set:
 
 1. **`app.js` → `CONFIG.appUrl`** — the URL of the deployed web app
-   (e.g. `https://app.example.com`). `CONFIG.repo` is already `Mackie-pl/km`.
-2. **Repo variable `ROOT_DOMAIN`** (optional) — your apex domain, e.g.
-   `example.com`. Set under *Settings → Secrets and variables → Actions →
-   Variables*. When set, the workflow writes a `CNAME` automatically.
+   (set to `https://app.kmflow.xyz`). `CONFIG.repo` is `Mackie-pl/km`.
+2. **Repo variable `ROOT_DOMAIN`** — the apex domain `kmflow.xyz`. Set it under
+   *Settings → Secrets and variables → Actions → Variables*. When set, the
+   workflow writes a `CNAME` automatically.
 
 ## One-time GitHub setup
 
