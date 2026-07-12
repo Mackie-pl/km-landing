@@ -6,7 +6,7 @@ const CONFIG = {
 	// owner/repo that publishes the app releases
 	repo: 'Mackie-pl/km',
 	// Where the web app lives (the Pages subdomain).
-	appUrl: 'https://app.kmflow.xyz',
+	appUrl: 'https://app.dotta.space',
 };
 
 const $ = (id) => document.getElementById(id);
