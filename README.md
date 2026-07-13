@@ -31,4 +31,4 @@ Two things to set:
 The page calls `https://api.github.com/repos/Mackie-pl/km/releases/latest` and
 classifies each asset by filename (`.msi`/`.exe` → Windows, `.dmg` → macOS,
 `.AppImage`/`.deb` → Linux, `.apk` → Android). Binaries are served by GitHub
-Releases, not from this site
+Releases, not from this site.
