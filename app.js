@@ -138,10 +138,20 @@ async function load() {
 		const release = await res.json();
 
 		const version = release.tag_name ?? '';
+		const tag = version ? `v${version.replace(/^v/, '')}` : '';
 		$('release-meta').textContent = version
 			? `${version} · ${fmtDate(release.published_at)}`
 			: '';
-		$('version-foot').textContent = version ? `v${version.replace(/^v/, '')}` : '';
+		$('version-foot').textContent = tag;
+
+		// Version chips stay hidden until there's a real tag to show.
+		if (tag) {
+			for (const id of ['version-nav', 'version-menu']) {
+				$(id).textContent = tag;
+				$(id).hidden = false;
+			}
+			$('version-nav').title = `Latest release ${tag} — jump to downloads`;
+		}
 
 		const items = (release.assets ?? [])
 			.map((a) => {
