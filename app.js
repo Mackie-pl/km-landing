@@ -12,8 +12,60 @@ const CONFIG = {
 const $ = (id) => document.getElementById(id);
 
 // Wire up the static links that don't depend on the API.
-$('open-app').href = CONFIG.appUrl;
-$('releases-link').href = `https://github.com/${CONFIG.repo}/releases`;
+const releasesUrl = `https://github.com/${CONFIG.repo}/releases`;
+for (const id of [
+	'open-app-nav',
+	'open-app-menu',
+	'open-app-hero',
+	'open-app-download',
+	'open-app-foot',
+]) {
+	$(id).href = CONFIG.appUrl;
+}
+$('releases-link').href = releasesUrl;
+$('github-link').href = releasesUrl;
+
+/** Mobile nav: the hamburger drives both the panel and its own animation. */
+const menuToggle = $('menu-toggle');
+const mobileMenu = $('mobile-menu');
+
+menuToggle.addEventListener('click', () => {
+	const open = menuToggle.getAttribute('aria-expanded') === 'true';
+	menuToggle.setAttribute('aria-expanded', String(!open));
+	mobileMenu.hidden = open;
+});
+
+// Any tap inside the panel navigates, so close behind it.
+mobileMenu.addEventListener('click', (e) => {
+	if (e.target.closest('a[href^="#"]')) {
+		menuToggle.setAttribute('aria-expanded', 'false');
+		mobileMenu.hidden = true;
+	}
+});
+
+// Resizing past the breakpoint leaves the panel stranded open otherwise.
+const desktop = window.matchMedia('(min-width: 760px)');
+desktop.addEventListener('change', (e) => {
+	if (e.matches) {
+		menuToggle.setAttribute('aria-expanded', 'false');
+		mobileMenu.hidden = true;
+	}
+});
+
+/** Asset names come from the GitHub API — never inject them raw. */
+function esc(s) {
+	return String(s).replace(
+		/[&<>"']/g,
+		(c) =>
+			({
+				'&': '&amp;',
+				'<': '&lt;',
+				'>': '&gt;',
+				'"': '&quot;',
+				"'": '&#39;',
+			})[c],
+	);
+}
 
 /**
  * Classify a release asset by filename into a platform bucket.
@@ -40,6 +92,14 @@ function classify(name) {
 	return null;
 }
 
+/** Card titles stay generic; the richer `label` carries the arch/format. */
+const OS_LABELS = {
+	windows: 'Windows',
+	mac: 'macOS',
+	linux: 'Linux',
+	android: 'Android',
+};
+
 /** Best guess at the visitor's OS, to highlight a recommended download. */
 function detectOS() {
 	const ua = navigator.userAgent;
@@ -63,6 +123,11 @@ function fmtDate(iso) {
 	}
 }
 
+function showError(msg) {
+	$('error').textContent = msg;
+	$('error').hidden = false;
+}
+
 async function load() {
 	try {
 		const res = await fetch(
@@ -73,57 +138,56 @@ async function load() {
 		const release = await res.json();
 
 		const version = release.tag_name ?? '';
-		$('release-meta').textContent =
-			`${version} · ${fmtDate(release.published_at)}`;
-		$('version-foot').textContent = version
-			? `Latest release ${version}`
+		$('release-meta').textContent = version
+			? `${version} · ${fmtDate(release.published_at)}`
 			: '';
+		$('version-foot').textContent = version ? `v${version.replace(/^v/, '')}` : '';
 
 		const items = (release.assets ?? [])
 			.map((a) => {
 				const c = classify(a.name);
-				return c
-					? { ...c, name: a.name, url: a.browser_download_url }
-					: null;
+				return c ? { ...c, name: a.name, url: a.browser_download_url } : null;
 			})
 			.filter(Boolean)
 			.sort((a, b) => a.sort - b.sort);
 
 		if (items.length === 0) {
-			$('error').textContent =
-				'No downloadable builds in the latest release yet.';
-			$('error').hidden = false;
+			showError('No downloadable builds in the latest release yet.');
 			return;
 		}
 
+		// One card per OS — the sort above puts the preferred build first.
+		const byOS = new Map();
+		for (const item of items) {
+			if (!byOS.has(item.os)) byOS.set(item.os, item);
+		}
+		const platforms = [...byOS.values()];
+
 		// Recommended pick for the detected OS.
-		const myOS = detectOS();
-		const pick = items.find((i) => i.os === myOS);
+		const pick = byOS.get(detectOS());
 		if (pick) {
 			$('primary').hidden = false;
 			$('primary').innerHTML = `
-				<a href="${pick.url}">
-					<span>Download for ${pick.label}</span>
-					<span class="sub">${pick.name}</span>
+				<a href="${esc(pick.url)}">
+					<span class="label">Download for ${esc(pick.label)}</span>
+					<span class="sub">${esc(pick.name)}</span>
 				</a>`;
 		}
 
-		// Full grid.
-		$('all-downloads').innerHTML = items
+		$('all-downloads').innerHTML = platforms
 			.map(
-				(i) => `
-				<li>
-					<a href="${i.url}">
-						<span class="platform">${i.label}</span>
-						<span class="file">${i.name}</span>
-					</a>
-				</li>`,
+				(p) => `
+				<div class="card platform-card">
+					<div class="platform-icon"></div>
+					<div class="platform-name">${esc(OS_LABELS[p.os] ?? p.label)}</div>
+					<div class="platform-file" title="${esc(p.name)}">${esc(p.name)}</div>
+					<a class="btn btn-ghost btn-sm" href="${esc(p.url)}">Download</a>
+				</div>`,
 			)
 			.join('');
 	} catch (err) {
 		$('release-meta').textContent = '';
-		$('error').textContent = `Couldn't load releases (${err.message}). See GitHub Releases.`;
-		$('error').hidden = false;
+		showError(`Couldn't load releases (${err.message}). See GitHub Releases.`);
 	}
 }
 

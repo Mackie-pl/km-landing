@@ -3,46 +3,317 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>dotta — download</title>
+		<title>dotta — filesystem-native, local-first notes</title>
 		<meta
 			name="description"
-			content="km — local-first notes for desktop, mobile, and the web."
+			content="dotta — filesystem-native, local-first notes for desktop, mobile, and web."
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+			rel="stylesheet"
 		/>
 		<link rel="stylesheet" href="styles.css" />
 	</head>
 	<body>
-		<main class="wrap">
-			<header class="hero">
-				<h1>dotta</h1>
-				<p class="tagline">Local-first notes for every device.</p>
-				<a class="cta" id="open-app" href="#">Open the web app →</a>
-			</header>
+		<!-- NAV -->
+		<div class="nav">
+			<a class="brand" href="#top">
+				<span class="brand-mark"></span>
+				<span class="brand-name">dotta</span>
+			</a>
 
-			<section class="downloads">
-				<div class="downloads-head">
-					<h2>Download</h2>
-					<span class="release-meta" id="release-meta" aria-live="polite"
-						>Loading latest release…</span
-					>
+			<nav class="nav-links">
+				<a href="#philosophy">Philosophy</a>
+				<a href="#features">Features</a>
+				<a href="#download">Download</a>
+			</nav>
+
+			<div class="nav-actions">
+				<a class="btn btn-ghost" id="open-app-nav" rel="noopener" target="_blank"
+					>Open app</a
+				>
+				<a class="btn btn-primary" href="#download">Download</a>
+			</div>
+
+			<button
+				class="hamburger"
+				id="menu-toggle"
+				type="button"
+				aria-label="Menu"
+				aria-expanded="false"
+				aria-controls="mobile-menu"
+			>
+				<span></span><span></span><span></span>
+			</button>
+		</div>
+
+		<div class="mobile-menu" id="mobile-menu" hidden>
+			<a href="#philosophy">Philosophy</a>
+			<a href="#features">Features</a>
+			<a href="#download">Download</a>
+			<div class="mobile-menu-actions">
+				<a class="btn btn-ghost" id="open-app-menu" rel="noopener" target="_blank"
+					>Open app</a
+				>
+				<a class="btn btn-primary" href="#download">Download</a>
+			</div>
+		</div>
+
+		<main id="top">
+			<!-- HERO -->
+			<section class="hero">
+				<div class="hero-copy">
+					<div class="pill">
+						<span class="pill-dot"></span>
+						Local-first notes
+					</div>
+					<h1>Real markdown files. Not a database with a UI.</h1>
+					<p class="lede">
+						dotta is a filesystem-native notes app for desktop, mobile, and web.
+						Your <code>.md</code> files are canonical — search, sync, and AI
+						agents are acceleration layered on top, never the source of truth.
+					</p>
+					<div class="hero-actions">
+						<a
+							class="btn btn-primary btn-lg"
+							id="open-app-hero"
+							rel="noopener"
+							target="_blank"
+							>Open the web app →</a
+						>
+						<a class="btn btn-ghost btn-lg" href="#download"
+							>Download for desktop</a
+						>
+					</div>
+					<p class="fine-print">
+						Open-source core · No account needed to own your notes
+					</p>
 				</div>
 
-				<!-- Recommended pick for the visitor's detected OS -->
-				<div id="primary" class="primary" hidden></div>
+				<!-- Abstract hero graphic -->
+				<div class="hero-art" aria-hidden="true">
+					<svg viewBox="0 0 460 420">
+						<line
+							x1="120"
+							y1="120"
+							x2="290"
+							y2="80"
+							stroke="#c7d2fe"
+							stroke-width="1.5"
+							stroke-dasharray="4 5"
+						/>
+						<line
+							x1="120"
+							y1="120"
+							x2="150"
+							y2="290"
+							stroke="#c7d2fe"
+							stroke-width="1.5"
+							stroke-dasharray="4 5"
+						/>
+						<line
+							x1="290"
+							y1="80"
+							x2="150"
+							y2="290"
+							stroke="#e5e7eb"
+							stroke-width="1.5"
+							stroke-dasharray="4 5"
+						/>
+						<circle cx="120" cy="120" r="3.5" fill="#818cf8" />
+						<circle cx="290" cy="80" r="3.5" fill="#818cf8" />
+						<circle cx="150" cy="290" r="3.5" fill="#818cf8" />
+					</svg>
 
-				<!-- Full grid of every platform asset -->
-				<ul id="all-downloads" class="grid"></ul>
+					<div class="float float-a">
+						<div class="note-card">
+							<div class="note-name">note.md</div>
+							<div class="skel skel-lg" style="width: 70%"></div>
+							<div class="skel" style="width: 100%"></div>
+							<div class="skel" style="width: 85%"></div>
+						</div>
+					</div>
 
-				<p id="error" class="error" hidden></p>
-				<p class="source">
-					All builds:
-					<a id="releases-link" href="#" rel="noopener">GitHub Releases</a>
-				</p>
+					<div class="float float-b">
+						<div class="note-card">
+							<div class="tag tag-review">needs review</div>
+							<div class="skel" style="width: 100%"></div>
+							<div class="skel" style="width: 60%"></div>
+						</div>
+					</div>
+
+					<div class="float float-c">
+						<div class="note-card">
+							<div class="skel" style="width: 90%"></div>
+							<div class="skel" style="width: 70%; margin-bottom: 14px"></div>
+							<div class="synced">
+								<span class="synced-dot"></span>
+								<span>synced</span>
+							</div>
+						</div>
+					</div>
+				</div>
 			</section>
 
-			<footer class="foot">
-				<span id="version-foot"></span>
-			</footer>
+			<!-- PHILOSOPHY -->
+			<section class="band" id="philosophy">
+				<div class="band-inner">
+					<h2>Not a database pretending to be files.</h2>
+					<p class="section-lede">
+						Real markdown files are canonical. Everything else — search, cache,
+						embeddings, sync — is acceleration built on top, and it's always
+						rebuildable from your files.
+					</p>
+					<div class="philosophy-grid">
+						<div class="card">
+							<div class="mono-label">note.md</div>
+							<p>
+								Open it in any editor, anytime. No proprietary format, no
+								lock-in.
+							</p>
+						</div>
+						<div class="card">
+							<div class="mono-label">indexeddb/</div>
+							<p>
+								Fast startup and search — a cache only. Delete it and dotta
+								rebuilds everything from your files.
+							</p>
+						</div>
+						<div class="card">
+							<div class="mono-label">note.conflict-deviceA.md</div>
+							<p>
+								Conflicts become new files you can read — never a silent merge,
+								never a silent loss.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- FEATURES -->
+			<section class="features" id="features">
+				<div class="section-head">
+					<h2>Everything else is acceleration.</h2>
+					<p class="section-lede">
+						Search, sync, and AI sit on top of your files — never in place of
+						them.
+					</p>
+				</div>
+				<div class="features-grid">
+					<div class="card feature">
+						<div class="glyph"><span class="glyph-circle"></span></div>
+						<h3>Local-first &amp; offline</h3>
+						<p>
+							Works fully offline and never blocks editing on a cloud
+							round-trip. Opens instantly from local cache, every time.
+						</p>
+					</div>
+
+					<div class="card feature">
+						<div class="glyph"><span class="glyph-square"></span></div>
+						<h3>Filesystem-native</h3>
+						<p>
+							Real .md files are canonical. IndexedDB is acceleration only —
+							rebuildable, never the source of truth.
+						</p>
+					</div>
+
+					<div class="card feature">
+						<div class="glyph"><span class="glyph-diamond"></span></div>
+						<h3>Cross-platform</h3>
+						<p>
+							Desktop, mobile, and web share the same vault and the same notes.
+							One app, wherever you write.
+						</p>
+					</div>
+
+					<div class="card feature">
+						<div class="glyph glyph-accent">
+							<span class="glyph-circle"></span>
+						</div>
+						<h3>AI agents, on approval</h3>
+						<p>
+							Agents suggest edits inline. You review and approve — nothing
+							touches your files without a nod.
+						</p>
+						<div class="tag tag-review">needs review</div>
+					</div>
+
+					<div class="card feature feature-wide">
+						<div class="glyph glyph-green">
+							<span class="glyph-circle"></span>
+						</div>
+						<h3>Sync anywhere</h3>
+						<p class="feature-wide-copy">
+							Bring your own storage. Sync moves real files and hashes — never a
+							hidden proprietary blob.
+						</p>
+						<div class="chips">
+							<span class="chip">Google Drive</span>
+							<span class="chip">OneDrive</span>
+							<span class="chip">Syncthing</span>
+							<span class="chip">Git</span>
+							<span class="chip">WebDAV</span>
+							<span class="chip">S3-compatible</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- DOWNLOAD -->
+			<section class="band band-download" id="download">
+				<div class="download-inner">
+					<h2>Get dotta</h2>
+					<p class="section-lede">One vault. Every device.</p>
+					<p class="release-meta" id="release-meta" aria-live="polite">
+						Loading latest release…
+					</p>
+
+					<!-- Recommended pick for the visitor's detected OS -->
+					<div class="primary" id="primary" hidden></div>
+
+					<!-- Web + one card per platform -->
+					<div class="download-grid">
+						<div class="card platform-card">
+							<div class="platform-icon platform-icon-web"></div>
+							<div class="platform-name">Web</div>
+							<a
+								class="btn btn-accent btn-sm"
+								id="open-app-download"
+								rel="noopener"
+								target="_blank"
+								>Open →</a
+							>
+						</div>
+						<div id="all-downloads" class="contents"></div>
+					</div>
+
+					<p class="error" id="error" hidden></p>
+					<p class="source">
+						All builds:
+						<a id="releases-link" href="#" rel="noopener" target="_blank"
+							>GitHub Releases</a
+						>
+					</p>
+				</div>
+			</section>
 		</main>
+
+		<!-- FOOTER -->
+		<footer class="foot">
+			<div class="brand">
+				<span class="brand-mark brand-mark-sm"></span>
+				<span class="brand-name brand-name-sm">dotta</span>
+				<span class="copyright">© 2026</span>
+			</div>
+			<div class="foot-links">
+				<a id="github-link" href="#" rel="noopener" target="_blank">GitHub</a>
+				<a id="open-app-foot" rel="noopener" target="_blank">Web app</a>
+				<span class="foot-version" id="version-foot"></span>
+			</div>
+		</footer>
 
 		<script src="app.js"></script>
 	</body>
